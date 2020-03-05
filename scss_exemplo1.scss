@@ -1,0 +1,292 @@
+/*Variaveis no SASS/SCSS -> As variáveis ​​no Sass funcionam
+de maneira semelhante àquelas em qualquer linguagem de programação,
+incluindo os principais, como tipos de dados e escopo.
+Quando definimos uma variável, armazenamos dentro dela um certo valor,
+que geralmente é algo que frequentemente se repete no CSS como uma
+cor de paleta, uma pilha de fontes ou as especificações inteiras
+para uma sombra de caixa legal.*/
+
+$title-font: normal 24px/1.5 'Open Sans', sans-serif;
+$cool-red: #F44336;
+$box-shadow-bottom-only: 0 2px 1px 0 rgba(0, 0, 0, 0.2);
+
+h1.title {
+    font: $title-font;
+    color: $cool-red;
+}
+
+div.container {
+    color: $cool-red;
+    background: #fff;
+    width: 100%;
+    box-shadow: $box-shadow-bottom-only;
+}
+/*Resultado no CSS:*/
+/*
+h1.title {
+    font: normal 24px/1.5 "Open Sans", sans-serif;
+    color: #F44336; 
+}
+
+div.container {
+    color: #F44336;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.2);
+}
+*/
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+
+/*Mixins no SASS/SCSS -> Você pode pensar em mixins como uma versão
+simplificada de classes construtoras em linguagens de
+programação- você pode pegar um grupo inteiro de declarações CSS
+e reutilizá-las onde quer que você queira dar e criar um conjunto
+específico de estilos. Os mixins podem até aceitar argumentos
+com a opção de definir valores padrão. No exemplo abaixo
+nós definimos um mixin quadrado , e então o usamos para criar
+quadrados de tamanhos e cores variados.*/
+/*Exemplo 1:*/
+@mixin square($size, $color) {
+    width: $size;
+    height: $size;
+    background-color: $color;
+}
+
+.small-blue-square {
+    @include square(20px, rgb(0,0,255));
+}
+
+.big-red-square {
+    @include square(300px, rgb(255,0,0));
+}
+/*Resultado no CSS:*/
+/*.small-blue-square {
+  width: 20px;
+  height: 20px;
+  background-color: blue; 
+}
+
+.big-red-square {
+  width: 300px;
+  height: 300px;
+  background-color: red;
+}*/
+
+/*Outra maneira eficiente de usar mixins é quando uma propriedade
+requer prefixos para funcionar em todos os navegadores.*/
+/*Exemplo 2:*/
+@mixin transform-tilt() {
+    $tilt: rotate(15deg);
+
+    -webkit-transform: $tilt;
+        -ms-transform: $tilt;
+            transform: $tilt;
+}
+
+.frame:hover { 
+    @include transform-tilt; 
+}
+/*Resultado no CSS:*/
+/* .frame:hover {
+    -webkit-transform: rotate(15deg);
+    -ms-transform: rotate(15deg); 
+    transform: rotate(15deg);
+}*/
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+
+/*Extend -> O próximo recurso que veremos é código> @extend , que
+permite herdar as propriedades CSS de um seletor para outro. Isso
+funciona de maneira semelhante ao sistema mixins, mas é preferível
+quando queremos criar uma conexão lógica entre os elementos em uma
+página. A extensão deve ser usada quando precisamos de elementos de
+estilo similar, que ainda diferem em alguns detalhes. Por exemplo,
+vamos fazer dois botões de diálogo - um para concordar e outro para
+cancelar o diálogo.*/
+.dialog-button {
+    box-sizing: border-box;
+    color: #ffffff;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    padding: 12px 40px;
+    cursor: pointer;
+}
+  
+.confirm {
+    @extend .dialog-button;
+    background-color: #87bae1;
+    float: left;
+}
+  
+.cancel {
+    @extend .dialog-button;
+    background-color: #e4749e;
+    float: right;
+}
+/*Resultado no CSS:*/
+/*.dialog-button, .confirm, .cancel {
+    box-sizing: border-box;
+    color: #ffffff;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    padding: 12px 40px;
+    cursor: pointer; 
+}
+
+.confirm {
+    background-color: #87bae1;
+    float: left; 
+}
+
+.cancel {
+    background-color: #e4749e;
+    float: right; 
+}*/
+
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+
+/*Nesting -> O HTML segue uma estrita estrutura de aninhamento,
+enquanto no CSS é geralmente um caos total. Com o aninhamento Sass,
+você pode organizar sua folha de estilo de maneira mais semelhante
+ao HTML, reduzindo assim a chance de conflitos de CSS.*/
+ul {
+    list-style: none;
+  
+    li {
+        padding: 15px;
+        display: inline-block;
+  
+        a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #444;
+        }
+  
+    }
+  
+}
+/*Resultado no CSS:*/
+/*ul {
+    list-style: none; 
+}
+
+ul li {
+    padding: 15px;
+    display: inline-block; 
+}
+
+ul li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #444; 
+}*/
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+
+/*Operations -> Com o Sass você pode fazer operações matemáticas
+básicas diretamente na folha de estilo e é tão simples quanto aplicar
+o símbolo aritmético apropriado. Embora vanilla CSS agora também
+ofereça esse recurso na forma de calc () , a alternativa Sass é mais
+rápida de escrever, tem a %operação de módulo e pode ser aplicada a
+uma ampla gama de tipos de dados (por exemplo, cores e strings).*/
+$width: 800px;
+
+.container { 
+    width: $width;
+}
+
+.column-half {
+    width: $width / 2;
+}
+
+.column-fifth {
+    width: $width / 5;
+}
+/*Resultado no CSS:*/
+/*.container {
+    width: 800px; 
+}
+
+.column-half {
+    width: 400px; 
+}
+
+.column-fifth {
+    width: 160px; 
+}*/
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+
+/*Functions -> Sass oferece uma longa lista de funções internas.
+Eles servem para todos os tipos de propósitos, incluindo manipulação
+de strings, operações relacionadas à cor e alguns métodos matemáticos
+úteis, como random () e round (). Para exibir uma das funções mais
+simples do Sass, criaremos um snippet rápido que utiliza o escurecer
+($ color, $ amount) para fazer um efeito instantâneo.*/
+$awesome-blue: #2196F3;
+
+a {
+    padding: 10px 15px;
+    background-color: $awesome-blue;
+}
+
+a:hover {
+    background-color: darken($awesome-blue,10%);
+}
+/*Resultado no CSS:*/
+/*a {
+    padding: 10px 15px;
+    background-color: #2196F3;
+}
+
+a:hover {
+    background-color: #0c7cd5;
+}*/
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+
+/*Import -> O CSS tem uma opção de importação que permite dividir
+seu CSS em partes menores e mais fáceis de manter. A única
+desvantagem é que, cada vez que você usa @importCSS, ele cria
+outra solicitação HTTP. O Sass baseia-se no CSS atual, @import
+mas em vez de exigir uma solicitação HTTP, o Sass pegará
+o arquivo que você deseja importar e o combinará com o arquivo
+para o qual você está importando, para que possa exibir um único
+arquivo CSS no navegador da web. Digamos que você tenha alguns arquivos
+Sass _reset.scsse base.scss.
+Queremos importar _reset.scsspara base.scss.*/
+
+/* _reset.scss */
+html,
+body,
+ul,
+ol {
+    margin:  0;
+    padding: 0;
+}
+
+/* base.scss */
+
+@import 'reset';
+
+body {
+    font: 100% Helvetica, sans-serif;
+    background-color: #efefef;
+}
+/*Observe que estamos usando @import 'reset'; no base.scss arquivo.
+Quando você importa um arquivo, não precisa incluir a extensão do arquivo
+.scss. Sass é inteligente e vai descobrir isso para você. Quando você
+gera o CSS, você recebe:*/
+
+/*Resultado no CSS:*/
+/*html, body, ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 100% Helvetica, sans-serif;
+    background-color: #efefef;
+}*/
+/*------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
