@@ -1,0 +1,12 @@
+@media #{$mq-mobile}{
+	.destaque {
+		font-size: 14px;
+		height: 250px;
+	}
+
+	.post-destaque,
+	.posts-antigos,
+	form {
+		width: auto;
+	}
+}
